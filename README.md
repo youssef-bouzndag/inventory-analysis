@@ -1,27 +1,28 @@
-Inventory Analysis
+# Inventory Analysis
 
-A Python-based inventory analysis project that transforms simulated weekly demand into inventory policy decisions.
+A Python-based inventory analysis project that transforms **simulated weekly demand into inventory policy decisions**.
 
-The project analyses demand for 40 products over 52 weeks, performs ABC classification, evaluates inventory risk, compares forecasting methods, and tests different safety-stock policies based on total cost.
+The project analyses demand for **40 products over 52 weeks**, performs ABC classification, evaluates inventory risk, compares forecasting methods, and tests different safety-stock policies based on total cost.
 
-All data is simulated. The project demonstrates how demand analysis, forecasting, and inventory modelling can support operational decisions.
-
----
-
-Contents
-
-1. Project Structure
-2. How to Run
-3. How the Analysis Works
-4. Output
-5. Main Findings
-6. Limitations
-7. Requirements and License
+All data is simulated. The project demonstrates how **demand analysis, forecasting, and inventory modelling can support operational decisions**.
 
 ---
 
-1. Project Structure
+## Contents
 
+1. [Project Structure](#1-project-structure)
+2. [How to Run](#2-how-to-run)
+3. [How the Analysis Works](#3-how-the-analysis-works)
+4. [Output](#4-output)
+5. [Main Findings](#5-main-findings)
+6. [Limitations](#6-limitations)
+7. [Requirements and License](#7-requirements-and-license)
+
+---
+
+## 1. Project Structure
+
+```text
 inventory-analysis/
 │
 ├── README.md
@@ -45,10 +46,11 @@ inventory-analysis/
 │
 └── 06_report.py
     └── Lesson 6: Generate the Excel report
+```
 
+Each script builds on the output of the previous script. The project therefore follows the workflow:
 
-Each script builds on the previous script's output. The project therefore follows the workflow:
-
+```text
 Raw Demand
     ↓
 ABC Analysis
@@ -60,38 +62,47 @@ Demand Forecast
 Safety Stock Policy
     ↓
 Inventory Decision
+```
 
 ---
 
-2. How to Run
+## 2. How to Run
 
-Step 1 — Install the requirements
+### Step 1 — Install the requirements
 
+```bash
 pip install -r requirements.txt
+```
 
-Step 2 — Generate the demand data.
+### Step 2 — Generate the demand data
 
+```bash
 python 01_create_data.py
+```
 
-This generates simulated weekly demand for 40 products over 52 weeks.
+This generates simulated weekly demand for **40 products over 52 weeks**.
 
 The demand includes seasonal variation to represent changes in demand throughout the year.
 
-Step 3 — Run the ABC analysis
+### Step 3 — Run the ABC analysis
 
+```bash
 python 02_abc.py
+```
 
 This classifies products according to their contribution to total revenue.
 
 The analysis uses the conventional approximate thresholds:
 
-* Class A: first 80% of cumulative revenue
-* Class B: next 15%
-* Class C: final 5%
+* **Class A:** first 80% of cumulative revenue
+* **Class B:** next 15%
+* **Class C:** final 5%
 
-Step 4 — Analyse inventory risk
+### Step 4 — Analyse inventory risk
 
+```bash
 python 03_inventory_risk.py
+```
 
 This simulates inventory without safety stock and measures:
 
@@ -100,9 +111,11 @@ This simulates inventory without safety stock and measures:
 * Inventory levels
 * Overstock
 
-Step 5 — Compare forecasting methods
+### Step 5 — Compare forecasting methods
 
+```bash
 python 04_forecast.py
+```
 
 This compares three forecasting approaches:
 
@@ -112,9 +125,11 @@ This compares three forecasting approaches:
 
 The forecasts are evaluated against the simulated demand.
 
-Step 6 — Compare inventory policies
+### Step 6 — Compare inventory policies
 
+```bash
 python 05_safety_stock.py
+```
 
 This compares three stocking policies using a total-cost model based on:
 
@@ -123,25 +138,29 @@ This compares three stocking policies using a total-cost model based on:
 
 The objective is to identify which policy provides the best cost-performance trade-off.
 
-Step 7 — Generate the Excel report
+### Step 7 — Generate the Excel report
 
+```bash
 python 06_report.py
+```
 
 This generates:
 
+```text
 inventory_report.xlsx
+```
 
 The workbook contains the main calculations, results, and charts.
 
-Note: Close inventory_report.xlsx before running 06_report.py again. Otherwise, Python may not be able to overwrite the file.
+> **Note:** Close `inventory_report.xlsx` before running `06_report.py` again. Otherwise, Python may not be able to overwrite the file.
 
 ---
 
-3. How the Analysis Works
+## 3. How the Analysis Works
 
-Demand Simulation
+### Demand Simulation
 
-The project simulates weekly demand for 40 products over one year.
+The project simulates weekly demand for **40 products over one year**.
 
 Each product has its own demand characteristics, including:
 
@@ -152,7 +171,7 @@ Each product has its own demand characteristics, including:
 
 The resulting dataset provides the input for the inventory analysis.
 
-ABC Analysis
+### ABC Analysis
 
 The ABC analysis ranks products according to their total revenue contribution.
 
@@ -160,49 +179,50 @@ Products are then classified according to their cumulative contribution to reven
 
 This helps identify which products deserve greater inventory-management attention.
 
-Inventory Risk
+### Inventory Risk
 
 The inventory-risk model simulates inventory without safety stock.
 
 It tracks whether available inventory can satisfy weekly demand and calculates indicators such as:
 
-Column 1	Column 2
-KPI	Description
-Stockout	Demand that cannot be fulfilled because inventory is insufficient.
-Fill rate	Percentage of demand fulfilled from available inventory.
-Overstock	Inventory remaining after demand is satisfied.
-Inventory value	The value of stock held in inventory.
+| KPI                 | Description                                                        |
+| ------------------- | ------------------------------------------------------------------ |
+| **Stockout**        | Demand that cannot be fulfilled because inventory is insufficient. |
+| **Fill rate**       | Percentage of demand fulfilled from available inventory.           |
+| **Overstock**       | Inventory remaining after demand is satisfied.                     |
+| **Inventory value** | The value of stock held in inventory.                              |
 
-
-Demand Forecasting
+### Demand Forecasting
 
 Three forecasting approaches are compared:
 
-1. Flat Forecast
+#### 1. Flat Forecast
 
 Uses average historical demand as the forecast.
 
-2. Moving Average
+#### 2. Moving Average
 
 Uses recent demand to estimate future demand.
 
-3. Seasonal Forecast
+#### 3. Seasonal Forecast
 
 Uses the seasonal pattern observed in the previous year to estimate future demand.
 
 The forecasting methods are compared using forecast accuracy.
 
-Safety Stock and Inventory Policies
+### Safety Stock and Inventory Policies
 
 The final analysis compares different inventory policies.
 
 The model considers two main cost components:
 
+```text
 Total Cost
     =
 Lost Profit from Stockouts
     +
 Inventory Holding Cost
+```
 
 A policy with more inventory can reduce stockouts and increase the fill rate, but it also increases the cost of holding inventory.
 
@@ -210,15 +230,17 @@ The objective is therefore not simply to maximise inventory or fill rate, but to
 
 ---
 
-4. Output
+## 4. Output
 
-The 06_report.py script generates:
+The `06_report.py` script generates:
 
+```text
 inventory_report.xlsx
+```
 
 The workbook contains the main results from the analysis.
 
-ABC Analysis
+### ABC Analysis
 
 The report shows:
 
@@ -229,7 +251,7 @@ The report shows:
 
 This identifies the products that contribute most significantly to total revenue.
 
-Inventory Risk
+### Inventory Risk
 
 The report includes indicators such as:
 
@@ -240,7 +262,7 @@ The report includes indicators such as:
 
 These show the consequences of operating without safety stock.
 
-Forecast Comparison
+### Forecast Comparison
 
 The forecasting analysis compares:
 
@@ -250,7 +272,7 @@ The forecasting analysis compares:
 
 The results show which approach provides the most accurate estimate under the simulated demand pattern.
 
-Inventory Policy Comparison
+### Inventory Policy Comparison
 
 The policy analysis compares:
 
@@ -265,23 +287,23 @@ This connects the analytical results to an actual inventory-management decision.
 
 ---
 
-5. Main Findings
+## 5. Main Findings
 
 Using the default random seed:
 
-* 14 of 40 products are classified as Class A and generate approximately 82% of total revenue.
-* The seasonal forecast is the most accurate forecasting method under the simulated demand pattern.
-* Using the seasonal forecast without safety stock produces the lowest total cost, approximately 53% lower than ordering based on average demand.
-* Adding safety stock increases the fill rate to approximately 100%, but also significantly increases inventory value.
+* **14 of 40 products** are classified as Class A and generate approximately **82% of total revenue**.
+* The **seasonal forecast** is the most accurate forecasting method under the simulated demand pattern.
+* Using the seasonal forecast without safety stock produces the **lowest total cost**, approximately **53% lower than ordering based on average demand**.
+* Adding safety stock increases the fill rate to approximately **100%**, but also significantly increases inventory value.
 * Safety stock becomes economically attractive when the cost of a stockout is sufficiently high relative to the cost of holding additional inventory.
 
-The main lesson is that the inventory decision is a cost trade-off, rather than simply a question of maximising service level.
+The main lesson is that the inventory decision is a **cost trade-off**, rather than simply a question of maximising service level.
 
 ---
 
-6. Limitations
+## 6. Limitations
 
-The project uses several simplifying assumptions.
+The project uses several simplifying assumptions:
 
 * All demand and product data are simulated.
 * The seasonal forecast uses the same underlying seasonal pattern from the previous year, which makes its performance more favourable than it would necessarily be with real-world data.
@@ -293,22 +315,22 @@ The project uses several simplifying assumptions.
 * Supplier constraints and minimum order quantities are not modelled.
 * The inventory policies are evaluated using simulated rather than historical company data.
 
-These assumptions mean that the results should be interpreted as a demonstration of the methodology, rather than as a real inventory recommendation.
+These assumptions mean that the results should be interpreted as a **demonstration of the methodology**, rather than as a real inventory recommendation.
 
 ---
 
-7. Requirements and License
+## 7. Requirements and License
 
-Requirements
+### Requirements
 
-* Python 3.9+
-* Pandas
-* NumPy
-* OpenPyXL
-* Matplotlib
+* **Python 3.9+**
+* **Pandas**
+* **NumPy**
+* **OpenPyXL**
+* **Matplotlib**
 
-See requirements.txt for the exact dependencies.
+See `requirements.txt` for the exact dependencies.
 
-License
+### License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License**.
